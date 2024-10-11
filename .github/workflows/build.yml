@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repo
-      - uses: actions/checkout@v3  
+        uses: actions/checkout@v3  # 'uses' is correctly indented here
       
       - name: Use Node.js
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3  # 'uses' is correctly indented here
         with:
           node-version: '20'
         
       - name: Install Dependencies
-        run: npm install
+        run: npm install  # 'run' is used here to execute the command
       
-      - name: Generat prisma client
-        run: npm run db:generate
+      - name: Generate Prisma Client
+        run: npm run db:generate  # Corrected typo and 'run' command
 
       - name: Run build
-        run: npm run build
+        run: npm run build  # 'run' command to execute the build
