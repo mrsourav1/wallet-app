@@ -23,6 +23,7 @@ async function main() {
           amount: 20000,
           token: "token__1",
           provider: "HDFC Bank",
+          transactionType:"deposite"
         },
       },
     },
@@ -43,10 +44,11 @@ async function main() {
       OnRampTransaction: {
         create: {
           startTime: new Date(),
-          status: "Failure",
+          status: "Success",
           amount: 2000,
           token: "token__2",
           provider: "HDFC Bank",
+          transactionType:"deposite"
         },
       },
     },

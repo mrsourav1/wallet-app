@@ -23,21 +23,50 @@ export async function p2pTransfer(to: string, amount: number) {
         }
     }
     await prisma.$transaction(async (tx) => {
+        // await tx.$queryRaw`SELECT * FROM "Balance" WHERE "userId" = ${Number(from)} FOR UPDATE`;
+        await tx.$queryRaw`
+            SELECT * FROM "Balance" WHERE "userId" IN (${Number(from)}, ${toUser.id}) FOR UPDATE
+        `;
         const fromBalance = await tx.balance.findUnique({
             where: { userId: Number(from) },
-          });
-          if (!fromBalance || fromBalance.amount < amount) {
+        });
+        if (!fromBalance || fromBalance.amount < amount) {
             throw new Error('Insufficient funds');
-          }
+        }
 
-          await tx.balance.update({
+        await tx.balance.update({
             where: { userId: Number(from) },
             data: { amount: { decrement: amount } },
-          });
+        });
 
-          await tx.balance.update({
+        await tx.balance.update({
             where: { userId: toUser.id },
             data: { amount: { increment: amount } },
-          });
+        });
+
+        const p2pData = await tx.p2pTransfer.create({
+            data: {
+                fromUserId: Number(from),
+                toUserId: toUser.id,
+                amount,
+                timestamp: new Date()
+            }
+        })
+        await tx.ledger.create({
+            data: {
+                userId: Number(from),
+                type: "debit",
+                transactionId: p2pData.id,
+                amount: amount,
+            }
+        })
+        await tx.ledger.create({
+            data: {
+                userId: Number(toUser.id),
+                type: "credit",
+                transactionId: p2pData.id,
+                amount: amount,
+            }
+        })
     });
 }

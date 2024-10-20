@@ -13,16 +13,25 @@ export async function createOnRampTransaction(provider: string, amount: number) 
         }
     }
     const token = (Math.random() * 1000).toString();
-    await prisma.onRampTransaction.create({
+    const transactionData = await prisma.onRampTransaction.create({
         data: {
             provider,
             status: "Processing",
             startTime: new Date(),
             token: token,
             userId: Number(session?.user?.id),
-            amount: amount * 100
+            amount: amount * 100,
+            transactionType:'deposite'
         }
     });
+    await prisma.ledger.create({
+        data:{
+            userId:Number(session.user?.id),
+            type:'deposite',
+            transactionId:transactionData.id,
+            amount:amount * 100
+        }
+    })
     return {
         message: "Done"
     }

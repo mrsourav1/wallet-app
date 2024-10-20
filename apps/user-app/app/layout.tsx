@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "../providers";
 import { AppbarClient } from "../components/AppbarClient";
 import { Inter } from "next/font/google";
-
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,8 +32,10 @@ export default function RootLayout({
       <Providers>
         <body className={inter.className}>
           <div className="min-w-screen min-h-screen bg-[#ebe6e6]">
-            <AppbarClient />
-            {children}
+            <Suspense fallback={<div>Loading...</div>}>
+              <AppbarClient />
+              {children}
+            </Suspense>
           </div>
         </body>
       </Providers>

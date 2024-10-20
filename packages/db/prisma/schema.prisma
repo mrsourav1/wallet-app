@@ -23,6 +23,7 @@ model User {
   Balance           Balance[]
   sentTransfers     p2pTransfer[]       @relation(name: "FromUserRelation")
   receivedTransfers p2pTransfer[]       @relation(name: "ToUserRelation")
+  Ledger            Ledger[]
 }
 
 model Merchant {
@@ -33,14 +34,25 @@ model Merchant {
 }
 
 model OnRampTransaction {
-  id        Int          @id @default(autoincrement())
-  status    OnRampStatus
-  token     String       @unique
-  provider  String
-  amount    Int
-  startTime DateTime
-  userId    Int
-  user      User         @relation(fields: [userId], references: [id])
+  id              Int          @id @default(autoincrement())
+  status          OnRampStatus
+  token           String       @unique
+  provider        String
+  amount          Int
+  startTime       DateTime
+  transactionType transType
+  userId          Int
+  user            User         @relation(fields: [userId], references: [id])
+}
+
+model Ledger {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  type          String
+  transactionId Int
+  amount        Int
+  timestamp     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id])
 }
 
 model Balance {
@@ -70,4 +82,9 @@ enum OnRampStatus {
   Success
   Failure
   Processing
+}
+
+enum transType {
+  deposite
+  withdraw
 }

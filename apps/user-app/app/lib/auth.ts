@@ -64,6 +64,10 @@ export const authOptions = {
         async session({ token, session }: any) {
             session.user.id = token.sub
             return session
+        },
+        async redirect({url,baseUrl}:any){
+            return `${baseUrl}/transfer`;
         }
-    }
+    },
+    
 }
