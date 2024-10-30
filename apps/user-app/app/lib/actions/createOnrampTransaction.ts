@@ -21,17 +21,24 @@ export async function createOnRampTransaction(provider: string, amount: number) 
             token: token,
             userId: Number(session?.user?.id),
             amount: amount * 100,
-            transactionType:'deposite'
+            transactionType: 'deposite'
         }
     });
     await prisma.ledger.create({
-        data:{
-            userId:Number(session.user?.id),
-            type:'deposite',
-            transactionId:transactionData.id,
-            amount:amount * 100
+        data: {
+            userId: Number(session.user?.id),
+            type: 'deposite',
+            transactionId: transactionData.id,
+            amount: amount * 100
         }
-    })
+    });
+    // await prisma.balance.create({
+    //     data: {
+    //         userId: Number(session.user?.id),
+    //         locked: amount * 100,
+    //         amount:
+    //     }
+    // })
     return {
         message: "Done"
     }

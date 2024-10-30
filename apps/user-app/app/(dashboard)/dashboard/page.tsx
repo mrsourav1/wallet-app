@@ -1,3 +1,3 @@
 export default function(){
-    return <div>Hii</div>
+    return <div>COMING SOON....</div>
 }

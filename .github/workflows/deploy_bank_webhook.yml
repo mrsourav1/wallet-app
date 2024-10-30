@@ -12,9 +12,6 @@ jobs:
     - name: Check Out Repo
       uses: actions/checkout@v2
 
-    - name: Prepare Dockerfile
-      run: cp ./docker/Dockerfile.user ./Dockerfile
-
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -25,12 +22,12 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./docker/Dockerfile.user
+        file: ./docker/Dockerfile.bank_webhook
         push: true
-        tags: souravdev08/wallet-app:latest
+        tags: souravdev08/bank_webhook:latest
 
     - name: Verify Pushed Image
-      run: docker pull souravdev08/wallet-app:latest
+      run: docker pull souravdev08/bank_webhook:latest
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
@@ -39,7 +36,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          sudo docker pull souravdev08/wallet-app:latest
-          sudo docker stop wallet-app || true
-          sudo docker rm wallet-app || true
-          sudo docker run -d --name wallet-app -p 3005:3000 souravdev08/wallet-app:latest
+          sudo docker pull souravdev08/bank_webhook:latest
+          sudo docker stop bank_webhook || true
+          sudo docker rm bank_webhook || true
+          sudo docker run -d --name bank_webhook -p 3003:3003 souravdev08/bank_webhook:latest
