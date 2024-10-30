@@ -40,5 +40,5 @@ jobs:
           sudo docker stop bank_webhook || true
           sudo docker rm bank_webhook || true
           sudo docker run -d --name bank_webhook -p 3003:3003 \
-            -e DATABASE_URL="postgresql://walletDb_owner:8vMeWXcoYl5R@ep-old-cell-a1a93epl.ap-southeast-1.aws.neon.tech/walletDb?sslmode=require" \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
             souravdev08/bank_webhook:latest
