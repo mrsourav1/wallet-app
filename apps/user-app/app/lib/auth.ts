@@ -67,7 +67,7 @@ export const authOptions = {
         },
         async redirect({url,baseUrl}:any){
             console.log(url,baseUrl)
-            return `https://wallet-app.flicstore.com/transfer`;
+            return `${baseUrl}/transfer`;
         }
     },
     
