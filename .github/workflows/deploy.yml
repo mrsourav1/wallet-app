@@ -41,4 +41,5 @@ jobs:
           sudo docker rm wallet-app || true
           sudo docker run -d --name wallet-app -p 3005:3000 \
             -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            -e NEXTAUTH_URL="https://wallet-app.flicstore.com/" \
             souravdev08/wallet-app:latest
