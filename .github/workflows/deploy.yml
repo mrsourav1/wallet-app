@@ -25,6 +25,7 @@ jobs:
         file: ./docker/Dockerfile.user
         push: true
         tags: souravdev08/wallet-app:latest
+        no-cache: true
 
     - name: Verify Pushed Image
       run: docker pull souravdev08/wallet-app:latest
