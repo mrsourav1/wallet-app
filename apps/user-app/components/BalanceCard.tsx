@@ -18,6 +18,7 @@ export const BalanceCard = ({amount, locked}: {
                 Total Locked Balance
             </div>
             <div>
+                
                 {locked} INR
             </div>
         </div>
