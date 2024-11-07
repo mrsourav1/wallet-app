@@ -28,7 +28,7 @@ export const WebhookTable = () => {
     const handleStatusChange = async (data:any, value:any) => {
         setStatusSelected(value);
         // await processPayment({ id });
-        const response = await axios.post("http://localhost:3003/hdfcWebhook",{
+        const response = await axios.post("https://bank-webhook.flicstore.com/hdfcWebhook",{
             token: data.token,
             user_identifier: Number(data.userId),
             amount: (data.amount/100)
