@@ -14,13 +14,16 @@ RUN npm install
 RUN npm run db:generate
 
 # Build only the `user-app`
-WORKDIR /usr/src/app/apps/user-app
+# WORKDIR /usr/src/app/apps/user-app
 RUN npm run build  
 
 # Return to root
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
 # Expose port 3000 or your app's port
-EXPOSE 3000
+# EXPOSE 3000
 
 CMD ["npm", "run", "start-user-app"]
+
+
+# /usr/src/app/apps/user-app/app/(dashboard)
